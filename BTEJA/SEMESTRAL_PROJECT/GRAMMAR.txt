@@ -1,0 +1,151 @@
+﻿(*
+# Quick Basic grammar definition
+File containing grammar of my implementation of Quick Basic.
+This file has been created with
+https://matthijsgroen.github.io/ebnf2railroad/try-yourself.html
+*)
+
+program         = [{code_comment}], kw_program, [{code_comment}], [{cf_sub}],
+                  code_block, kw_end;
+
+(* ## Numeric literal definitions definitions *)
+num_digit       = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+num_decimal     = ".";
+num_integer     = num_digit, [{num_digit}];
+num_float       = num_integer, num_decimal, num_integer;
+num_any         = num_float | num_integer;
+num_expr        = num_any, [{op_ar, num_any}];
+num_expr_var    = (num_expr | ident_valid),
+                  [{op_ar, (num_expr | ident_valid)}];
+
+(* ## Character definitions *)
+char_upper      = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" |
+                  "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" |
+                  "U" | "V" | "W" | "X" | "Y" | "Z";
+char_lower      = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" |
+                  "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" |
+                  "u" | "v" | "w" | "x" | "y" | "z";
+char_letter     = char_upper | char_lower;
+char_spec       = "," | "." | "<" | ">" | "-" | "_" | '"' |
+                  "'" | "=" | "?" | " " | "!" | "%" | "/";
+char_any        = char_letter | char_spec;
+char_string     = char_any, [{char_any}];
+char_str        = '"', char_string, '"';
+
+
+(* ## Operators definitions *)
+
+(* ### Logical operators *)
+op_log_and      = "AND";
+op_log_or       = "OR";
+op_log_not      = "NOT";
+op_log          = op_log_and | op_log_or | op_log_not;
+
+(* ### Arithmetical operators *)
+op_ar_plus      = "+";
+op_ar_minus     = "-";
+op_ar_divide    = "/";
+op_ar_multiply  = "*";
+op_ar           = op_ar_plus | op_ar_minus | op_ar_divide | op_ar_multiply;
+
+(* ### Relational operators *)
+op_rel_gt       = ">";
+op_rel_lt       = "<";
+op_rel_eq       = "=";
+op_rel_asgn     = "=";
+op_rel_neq      = "<>";
+op_rel_gteq     = op_rel_gt , op_rel_eq;
+op_rel_lteq     = op_rel_lt, op_rel_eq;
+op_rel          = op_rel_gt | op_rel_lt | op_rel_eq |
+                  op_rel_neq | op_rel_gteq | op_rel_lteq;
+
+(* ## Keywords definitions *)
+kw_if           = "IF";
+kw_then         = "THEN";
+kw_elif         = "ELSEIF";
+kw_else         = "ELSE";
+kw_endif        = "ENDIF";
+kw_print        = "PRINT";
+kw_input        = "INPUT";
+kw_dim          = "DIM";
+kw_as           = "AS";
+kw_integer      = "INTEGER";
+kw_string       = "STRING";
+kw_double       = "DOUBLE";
+kw_rem          = "REM";
+kw_for          = "FOR";
+kw_to           = "TO";
+kw_endfor       = "ENDFOR";
+kw_while        = "WHILE";
+kw_wend         = "WEND";
+kw_sub          = "SUB";
+kw_return       = "RETURN";
+kw_endsub       = "ENDSUB";
+kw_program      = "PROGRAM";
+kw_end          = "END";
+kw_dtype        = kw_integer | kw_double | kw_string;
+kw              = kw_if | kw_then | kw_elif | kw_else | kw_endif | kw_print |
+                  kw_input | kw_dim | kw_as | kw_dtype | kw_rem | kw_for |
+                  kw_to | kw_endfor | kw_while | kw_wend | kw_sub | kw_return |
+                  kw_endsub | kw_program | kw_end;
+
+(* ## Commands definitions *)
+cmd_declare     = kw_dim, ident_valid,kw_as, kw_dtype;
+cmd_assign      = ident_valid, op_rel_asgn,
+                  (num_expr_var | ident_valid | char_str | cmd_call);
+cmd_define      = cmd_declare, op_rel_asgn,
+                  (num_expr_var | ident_valid | char_str | cmd_call);
+cmd_print       = kw_print, (char_str, ident_valid);
+cmd_input       = kw_input, char_str, ident_valid;
+cmd_call        = ident_valid, "(", [(num_expr_var | ident_valid | char_str)],
+                  [{",", (num_expr_var | ident_valid | char_str)}], ")";
+cmd             = cmd_declare | cmd_assign | cmd_define |
+                  cmd_print | cmd_input | cmd_call;
+cmd_block       = cmd, [{cmd}];
+cmd_block_sub   = (cmd | cf_sub_return), [{cmd | cf_sub_return}]; 
+
+(* ## Flow control definitions *)
+cf              = cf_if | cf_for | cf_while;
+cf_s            = cf_if_sub | cf_for_sub | cf_while_sub;
+
+(* ### Conditional jumps definition *)
+cf_if_header    = kw_if, cond_expr, kw_then;
+cf_if_elif      = kw_elif, cond_expr, kw_then;
+cf_if           = cf_if_header, code_block, [{cf_if_elif, code_block}],
+                  [kw_else, code_block], kw_endif;
+cf_if_sub       = cf_if_header, code_block_sub, [{cf_if_elif, code_block_sub}],
+                  [kw_else, code_block_sub], kw_endif;
+
+(* ### Counted loop definition *)
+cf_for_header   = kw_for, (cmd_assign, cmd_define), kw_to,
+                  (num_any | ident_valid);
+cf_for          = cf_for_header, code_block, kw_endfor;
+cf_for_sub      = cf_for_header, code_block_sub, kw_endfor;
+
+(* ### Conditional loop definition *)
+cf_while_header = kw_while, (cond_expr);
+cf_while        = cf_while_header, code_block, kw_wend;
+cf_while_sub    = cf_while_header, code_block_sub, kw_wend;
+
+(* ### Sub programs definition *)
+cf_sub_header   = kw_sub, ident_valid,
+                  ["(", cmd_declare, [{",", cmd_declare}], ")"];
+cf_sub_return   = kw_return, (ident_valid | num_any | char_str);
+cf_sub          = cf_sub_header, code_block_sub, kw_endsub;
+
+(* ## Other definitions *)
+code_reserved   = op_log | kw;
+code_block      = (code_comment | cmd_block | cf),
+                  [{code_comment | cmd_block | cf}];
+code_block_sub  = (code_comment | cmd_block_sub | cf_s),
+                  [{code_comment | cmd_block_sub | cf_s}];
+code_comment    = kw_rem, char_string;
+
+(* ### Identifier definitions *)
+ident_all       = char_letter, [{char_letter | num_digit}];
+ident_valid     = ident_all - code_reserved;
+
+(* ### Conditions definitions *)
+cond_term       = [op_log_not], ident_valid, op_rel,
+                  (ident_valid | num_integer | num_float | char_str);
+cond_expr       = cond_term, [{(op_log_and | op_log_or), cond_term}];

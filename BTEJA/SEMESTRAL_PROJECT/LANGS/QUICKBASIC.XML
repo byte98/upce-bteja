@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<language name="QuickBasic">
+  <keywords>
+      <keyword arguments="1" separators="()" argument-separator=",">SUB</keyword>
+      <struct>
+          <key>DIM</key>
+          <value allowed="abcdefghijklmnopqrstuvwxyz0123456789" case-sensitivity="false" startswith="abcdefghijklmnopqrstuvwxyz"></value>
+          <key>AS</key>
+          <select values="INTEGER, DOUBLE, STRING"></select>
+      </struct>
+  </keywords>
+</language>

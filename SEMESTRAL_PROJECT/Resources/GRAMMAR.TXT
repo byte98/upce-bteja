@@ -1,0 +1,37 @@
+(* 
+# PHP grammar
+This file contains part of PHP grammar used in my semestral project
+for subject Language Thoery which i study at the University of Pardubice.
+Author: Jiri Skoda <<jiri.skoda@student.upce.cz>>
+*)
+
+program = "<?php" [comment] [[comment]{function}] {comment | while | if | command}"?>";
+
+(* ## General definitions *)
+float = /([0-9]*[.])?[0-9]+/;
+integer = /[0-9]+/;
+string = /"(?:\\.|[^"\\])*"/;
+comment = /\/\/.*/;
+identifier = /[A-Za-z]+/;
+variable = /\$([A-Za-z]+)/;
+read = variable "=" "fgets(STDIN)";
+write = "echo" "(" (variable | string) ")";
+condition = (float | integer | string | variable) ("==" | "!=" | ">=" | "<=" | ">" | "<") (float | integer | string | variable);
+factor = (float | integer | variable | call);
+term = factor {("*" | "/") factor};
+expression = term {("+" | "-") term};
+
+(* ## Variables declarations *)
+dec_str = "string" variable "=" (string | variable | "fgets(STDIN)");
+dec_float = "float" variable "=" (float | variable | "floatval" "(" (variable | string) ")" | expression);
+dec_int   = "int" variable "=" (integer | variable | "intval" "(" (variable | string) ")" | expression);
+
+(* ## Blocks definitons *)
+command = (comment | assignment | write | read | call | variable "=" "strval" "(" (variable | float | integer) ")" | 
+	  variable "=" "floatval" "(" (variable | string) ")" |   variable "=" "intval" "(" (variable | string) ")") ";";
+if = "if" "(" condition ")" "{" {command | "break;" | "return" variable ";"} "}" ["else" "{" {command | "break;" | "return" variable ";"} "}"];
+while = "while" "(" condition ")" "{" {command | if | "break;"} "}";
+function = "function" identifier "(" [("float" | "int" | "string") variable {"," ("float" | "int" | "string") variable}] ")" "{" {while | if | command | ("return" variable ";")} "}";
+call = identifier ("(" [(variable | float | integer | string)[{"," (variable | float | integer | string)}]] ")");
+assignment = dec_str | dec_float | dec_int | (variable "++") | (variable "--") |
+             (variable "=" expression)| (variable "=" call);
