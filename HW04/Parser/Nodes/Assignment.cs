@@ -85,21 +85,29 @@ namespace HW04.Parser.Nodes
 
         public override void Execute()
         {
-            this.expression.Execute();
-            if (this.expression.HasValue())
+            if (this.expression != null)
             {
-                if (this.block.HasVariable(this.varName))
+
+                this.expression.Execute();
+                if (this.expression.HasValue())
                 {
-                    this.block.SetVariable(this.varName, this.expression.GetValue());
+                    if (this.block.HasVariable(this.varName))
+                    {
+                        this.block.SetVariable(this.varName, this.expression.GetValue());
+                    }
+                    else
+                    {
+                        Parser.PrintError("Unknown variable '" + this.varName + "' found in assignment execution!", this.token);
+                    }
                 }
                 else
                 {
-                    Parser.PrintError("Unknown variable '" + this.varName + "' found in assignment execution!", this.token);
+                    Parser.PrintError("Failed to process expression for assignment!", this.token);
                 }
             }
             else
             {
-                Parser.PrintError("Failed to process expression for assignment!", this.token);
+                Parser.PrintError("Execution of expression of assignment failed (nothing to execute)!", this.token);
             }
         }
     }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SEMESTRAL_PROJECT {
+namespace SemestralProject {
     using System;
     
     
@@ -111,6 +111,16 @@ namespace SEMESTRAL_PROJECT {
         internal static byte[] PROGRAM3 {
             get {
                 object obj = ResourceManager.GetObject("PROGRAM3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SANDBOX {
+            get {
+                object obj = ResourceManager.GetObject("SANDBOX", resourceCulture);
                 return ((byte[])(obj));
             }
         }

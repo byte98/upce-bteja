@@ -41,6 +41,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interpreter\Interpreter.cs" />
+    <Compile Include="Lexer\Lexer.cs" />
+    <Compile Include="Lexer\Token.cs" />
+    <Compile Include="Lexer\Tokens.cs" />
+    <Compile Include="Lexer\TokenStream.cs" />
+    <Compile Include="Parser\EDataType.cs" />
+    <Compile Include="Parser\Nodes\Blocks\FunctionBody.cs" />
+    <Compile Include="Parser\Nodes\Blocks\While.cs" />
+    <Compile Include="Parser\Nodes\Blocks\If.cs" />
+    <Compile Include="Parser\Nodes\Commands\Assignment.cs" />
+    <Compile Include="Parser\Nodes\Commands\Nop.cs" />
+    <Compile Include="Parser\Nodes\Commands\Return.cs" />
+    <Compile Include="Parser\Nodes\Commands\Decrementation.cs" />
+    <Compile Include="Parser\Nodes\Commands\Incrementation.cs" />
+    <Compile Include="Parser\Nodes\Commands\Write.cs" />
+    <Compile Include="Parser\Nodes\Commands\Break.cs" />
+    <Compile Include="Parser\Nodes\Register.cs" />
+    <Compile Include="Parser\Nodes\Expressions\Condition.cs" />
+    <Compile Include="Parser\Nodes\Expressions\FloatVal.cs" />
+    <Compile Include="Parser\Nodes\Expressions\IntVal.cs" />
+    <Compile Include="Parser\Nodes\Expressions\StrVal.cs" />
+    <Compile Include="Parser\Nodes\Expressions\Read.cs" />
+    <Compile Include="Parser\Nodes\Expressions\Call.cs" />
+    <Compile Include="Parser\Nodes\Commands\Command.cs" />
+    <Compile Include="Parser\Nodes\Commands\Declaration.cs" />
+    <Compile Include="Parser\Nodes\ExecutableBlockNode.cs" />
+    <Compile Include="Parser\FunctionModel.cs" />
+    <Compile Include="Parser\Nodes\BlockNode.cs" />
+    <Compile Include="Parser\Nodes\Blocks\ExecutableBlock.cs" />
+    <Compile Include="Parser\Nodes\Blocks\Function.cs" />
+    <Compile Include="Parser\Nodes\Blocks\Program.cs" />
+    <Compile Include="Parser\Nodes\Context.cs" />
+    <Compile Include="Parser\Nodes\Expressions\Expression.cs" />
+    <Compile Include="Parser\Nodes\Expressions\Term.cs" />
+    <Compile Include="Parser\Nodes\Expressions\Variable.cs" />
+    <Compile Include="Parser\Nodes\Expressions\Literal.cs" />
+    <Compile Include="Parser\Nodes\Expressions\Factor.cs" />
+    <Compile Include="Parser\Nodes\IExecutableNode.cs" />
+    <Compile Include="Parser\Nodes\IPredicate.cs" />
+    <Compile Include="Parser\Nodes\IValueNode.cs" />
+    <Compile Include="Parser\Nodes\Node.cs" />
+    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\Value.cs" />
+    <Compile Include="Parser\VariableModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -51,18 +95,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Resources\PROGRAM1.PHP" />
-    <None Include="Resources\PROGRAM2.PHP" />
-    <None Include="Resources\PROGRAM3.PHP" />
+    <None Include="Resources\PROGRAM1.PHP">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\PROGRAM2.PHP">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\PROGRAM3.PHP">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\SANDBOX.PHP">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GRAMMAR.TXT" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GRAMMAR.TXT" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

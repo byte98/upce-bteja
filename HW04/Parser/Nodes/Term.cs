@@ -35,14 +35,14 @@ namespace HW04.Parser.Nodes
             /// <summary>
             /// Sign of factor
             /// </summary>
-            public FactorSign sign { get; }
+            public FactorSign sign { get; set; }
 
             /// <summary>
             /// Factor itself
             /// </summary>
-            public Factor factor { get; }
+            public Factor factor { get; set; }
 
-            public SignedFactor(FactorSign sign, Factor factor)
+            public SignedFactor(FactorSign sign, Factor factor): this()
             {
                 this.sign = sign;
                 this.factor = factor;

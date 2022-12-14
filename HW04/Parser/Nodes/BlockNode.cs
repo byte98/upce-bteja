@@ -48,6 +48,10 @@ namespace HW04.Parser.Nodes
             {
                 reti = this.codeBlock.HasVariable(name);
             }
+            if (this.parent != null && reti == false)
+            {
+                reti = this.parent.HasVariable(name);
+            }
             return reti;
         }
 
@@ -61,6 +65,10 @@ namespace HW04.Parser.Nodes
             if (this.codeBlock != null)
             {
                 this.codeBlock.SetVariable(name, value);
+            }
+            if (this.parent != null)
+            {
+                this.parent.SetVariable(name, value);
             }
         }
 
@@ -76,6 +84,10 @@ namespace HW04.Parser.Nodes
             {
                 reti = this.codeBlock.GetVariable(name);
             }
+            if (this.parent != null && reti == double.NaN)
+            {
+                reti = this.parent.GetVariable(name);
+            }
             return reti;
         }
 
@@ -90,6 +102,10 @@ namespace HW04.Parser.Nodes
             if (this.codeBlock != null)
             {
                 reti = this.codeBlock.HasConstant(name);
+            }
+            if (this.parent != null && reti == false)
+            {
+                reti = this.parent.HasConstant(name);
             }
             return reti;
         }
@@ -107,6 +123,10 @@ namespace HW04.Parser.Nodes
             {
                 reti = this.codeBlock.AddConstant(name, value);
             }
+            if (this.parent != null && reti == false)
+            {
+                reti = this.parent.AddConstant(name, value);
+            }
             return reti;
         }
 
@@ -122,6 +142,10 @@ namespace HW04.Parser.Nodes
             {
                 reti = this.codeBlock.GetConstant(name);
             }
+            if (this.parent != null && reti == double.NaN)
+            {
+                reti = this.parent.GetConstant(name);
+            }
             return reti;
         }
 
@@ -136,6 +160,10 @@ namespace HW04.Parser.Nodes
             if (this.codeBlock != null)
             {
                 reti = this.codeBlock.HasProcedure(name);
+            }
+            if (this.parent != null && reti == false)
+            {
+                reti = this.parent.HasProcedure(name);
             }
             return reti;
         }
@@ -153,6 +181,10 @@ namespace HW04.Parser.Nodes
             {
                 reti = this.codeBlock.AddProcedure(name, procedure);
             }
+            if (this.parent != null && reti == false)
+            {
+                this.parent.AddProcedure(name, procedure);
+            }
             return reti;
         }
 
@@ -167,6 +199,10 @@ namespace HW04.Parser.Nodes
             if (this.codeBlock != null)
             {
                 reti = this.codeBlock.GetProcedure(name);
+            }
+            if (this.parent != null && reti == null)
+            {
+                reti = this.parent.GetProcedure(name);
             }
             return reti;
         }

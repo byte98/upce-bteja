@@ -96,7 +96,7 @@ namespace HW04.Parser.Nodes
             }
             else
             {
-                Parser.Print("Cannot execute program (there is nothing to execute)!", this.token);
+                Parser.PrintError("Cannot execute program (there is nothing to execute)!", this.token);
             }
         }
     }

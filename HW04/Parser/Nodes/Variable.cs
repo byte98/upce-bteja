@@ -26,6 +26,7 @@ namespace HW04.Parser.Nodes
             if (this.token.HasValue() && this.token.GetTokenType() == TokenType.IDENT)
             {
                 this.name = this.token.GetValue();
+                this.hasName = true;
                 this.hasValue = true;
                 this.valueEditable = true;
                 Parser.Print("Found variable [" + this.name + "]", this.token);

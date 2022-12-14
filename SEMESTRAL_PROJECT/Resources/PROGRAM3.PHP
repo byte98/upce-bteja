@@ -3,26 +3,21 @@
 
 function sum(int $n)
 {
+    int $reti = $n;
     if ($n != 0)
     {
         $n--;
-        int $reti = 0;
-        $reti = sum($n);
-        $reti = $n + $reti;
-        return $reti;
+        int $res = sum($n);
+        $reti = $reti + $res;
     }
-    else
-    {
-        return $n;
-    }
+    return $reti;
 }
 echo("Enter number:");
 string $input = fgets(STDIN);
 int $val = intval($input);
 if ($val > 0)
 {
-    int $result = 0;
-    $result = sum($val);
-    echo($result);
+    int $result = sum($val);
+    echo(strval($result));
 }
 ?>

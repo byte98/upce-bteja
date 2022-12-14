@@ -24,24 +24,12 @@ namespace HW04.Parser.Nodes
         /// <param name="block">Block to which node belongs to</param>
         public ExecutableNode(TokenStream tokens, Token token, BlockNode block): base(tokens, token)
         {
+            this.block = block;
         }
 
         /// <summary>
         /// Executes node and stores result into value of node
         /// </summary>
         public abstract void Execute();
-
-        /// <summary>
-        /// Executes node and stores result into value of node
-        /// </summary>
-        /// <param name="arg">Argument of node</param>
-        //public abstract void Execute(double arg);
-
-        /// <summary>
-        /// Executes node and stores result into value of node
-        /// </summary>
-        /// <param name="arg1">First argument of node</param>
-        /// <param name="arg2">Second argument of node</param>
-        // public abstract void Execute(double arg1, double arg2);
     }
 }

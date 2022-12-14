@@ -35,19 +35,19 @@ namespace HW04.Parser.Nodes
             /// <summary>
             /// Sign of term
             /// </summary>
-            public TermSign sign { get; }
+            public TermSign sign { get; set; }
 
             /// <summary>
             /// Term itself
             /// </summary>
-            public Term term { get; }
+            public Term term { get; set; }
 
             /// <summary>
             /// Creates new signed term
             /// </summary>
             /// <param name="sign">Sign of term</param>
             /// <param name="term">Term itself</param>
-            public SignedTerm(TermSign sign, Term term)
+            public SignedTerm(TermSign sign, Term term): this()
             {
                 this.sign = sign;
                 this.term = term;
@@ -121,6 +121,7 @@ namespace HW04.Parser.Nodes
                 if (this.tokens.HasNext())
                 {
                     Term t = new Term(this.tokens, this.tokens.GetNext(), this.block);
+                    t.Build();
                     this.terms.Add(new SignedTerm(SignedTerm.TermSign.PLUS, t));
                     if (this.tokens.HasNext() && (this.tokens.ObserveNext().GetTokenType() == TokenType.PLUS || this.tokens.ObserveNext().GetTokenType() == TokenType.MINUS))
                     {
@@ -137,6 +138,7 @@ namespace HW04.Parser.Nodes
                 if (this.tokens.HasNext())
                 {
                     Term t = new Term(this.tokens, this.tokens.GetNext(), this.block);
+                    t.Build();
                     this.terms.Add(new SignedTerm(SignedTerm.TermSign.MINUS, t));
                     if (this.tokens.HasNext() && (this.tokens.ObserveNext().GetTokenType() == TokenType.PLUS || this.tokens.ObserveNext().GetTokenType() == TokenType.MINUS))
                     {

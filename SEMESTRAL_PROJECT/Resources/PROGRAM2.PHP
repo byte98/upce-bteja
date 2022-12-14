@@ -5,7 +5,7 @@
 function exp(float $base, int $exponent)
 {
     float $reti = $base;
-    int $i = 0;
+    int $i = 1;
     while ($i < $exponent)
     {
         $reti = $reti * $base;
@@ -16,14 +16,13 @@ function exp(float $base, int $exponent)
 echo("Enter base:");
 string $input = fgets(STDIN);
 float $b = floatval($input);
-while ($b != 0)
+while ($b != floatval(0))
 {
     echo("Enter exponent:");
     $input = fgets(STDIN);
     int $e = intval($input);
-    float $result = 0;
-    $result = exp($b, $e);
-    echo ($reti);
+    float $result = exp($b, $e);
+    echo(strval($result));
     echo("Enter base:");
     $input = fgets(STDIN);
     $b = floatval($input);

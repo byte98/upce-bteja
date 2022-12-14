@@ -38,7 +38,7 @@ namespace HW04.Parser.Nodes
                     Token t = this.tokens.GetNext();
                     if (t.GetTokenType() == TokenType.SEMICOLON)
                     {
-                        this.block = new Block(this.tokens, null, this.block);
+                        this.block = new Block(this.tokens, null, this.parent);
                         this.block.Build();
                         this.InsertProcedure(this.name, this.block.GetExecutable());
                     }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -129,5 +129,8 @@
   </data>
   <data name="PROGRAM3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\PROGRAM3.PHP;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SANDBOX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SANDBOX.PHP;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

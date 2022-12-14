@@ -58,9 +58,9 @@ namespace HW04.Parser.Nodes
         public override void Execute()
         {
             ExecutableNode procedure = this.block.GetProcedure(this.name);
-            if (this.block.HasProcedure(this.name) || procedure == null)
+            if (this.block.HasProcedure(this.name) == false || procedure == null)
             {
-                Parser.PrintError("Cannot execute procedure '" + this.name + "' (unknown procedure)!", this.token);
+                Parser.PrintError("Cannot call procedure '" + this.name + "' (unknown procedure)!", this.token);
             }
             else
             {

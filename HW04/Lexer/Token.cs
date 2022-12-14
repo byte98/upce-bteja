@@ -130,6 +130,51 @@ namespace HW04.Lexer
             return reti;
         }
 
+        /// <summary>
+        /// Gets line containing token
+        /// </summary>
+        /// <returns>Line containing token</returns>
+        public string GetLine()
+        {
+            return this.line;
+        }
+
+        /// <summary>
+        /// Gets file which contains token
+        /// </summary>
+        /// <returns>File containing token</returns>
+        public string GetFile()
+        {
+            return this.file;
+        }
+
+        /// <summary>
+        /// Gets number of row containing token
+        /// </summary>
+        /// <returns>Number of row containing token</returns>
+        public int GetRow()
+        {
+            return this.row;
+        }
+
+        /// <summary>
+        /// Gets number of column containing token
+        /// </summary>
+        /// <returns>Number of column containing token</returns>
+        public int GetColumn()
+        {
+            return this.column;
+        }
+
+        /// <summary>
+        /// Gets textual content of token
+        /// </summary>
+        /// <returns>Textual content of token</returns>
+        public String GetContent()
+        {
+            return this.text;
+        }
+
         public override string ToString()
         {
             StringBuilder reti = new StringBuilder();

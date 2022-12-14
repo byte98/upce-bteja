@@ -37,7 +37,7 @@ namespace HW04.Parser.Nodes
         /// </summary>
         /// <param name="tokens">Stream of tokens from lexer</param>
         /// <param name="token">Token defining block node in AST</param>
-        /// <param name="codeBlock">Parential code block</param>
+        /// <param name="block">Parential code block</param>
         public Block(TokenStream tokens, Token token, BlockNode block) : base(tokens, token, block)
         {
             this.constants = new List<Constant>();
@@ -83,7 +83,7 @@ namespace HW04.Parser.Nodes
                 }
                 else
                 {
-                    this.BuildStatement();
+                    this.BuildStatement(t);
                 }
             }
             else
@@ -149,9 +149,18 @@ namespace HW04.Parser.Nodes
         {
             if (this.tokens.HasNext())
             {
-                Variable v = new Variable(this.tokens, this.tokens.GetNext());
+                Token next = this.tokens.GetNext();
+                Variable v = new Variable(this.tokens, next);
                 v.Build();
                 this.variables.Add(v);
+                if (v.HasName())
+                {
+                    this.SetVariable(v.GetName(), double.NaN);
+                }
+                else
+                {
+                    Parser.PrintError("Unexpected state during building block#" + this.id + " variables! Variable must have a name!", next);
+                }
                 if (this.tokens.HasNext())
                 {
                     Token t = this.tokens.GetNext();
@@ -186,7 +195,8 @@ namespace HW04.Parser.Nodes
         {
             if (this.tokens.HasNext())
             {
-                Procedure p = new Procedure(this.tokens, this.tokens.GetNext(), this.parent);
+                Token next = this.tokens.GetNext();
+                Procedure p = new Procedure(this.tokens, next, this);
                 p.Build();
                 this.procedures.Add(p);
                 if (this.tokens.HasNext())
@@ -223,17 +233,11 @@ namespace HW04.Parser.Nodes
         /// <summary>
         /// Builds statement
         /// </summary>
-        private void BuildStatement()
+        /// <param name="t"></param>
+        private void BuildStatement(Token t)
         {
-            if (this.tokens.HasNext())
-            {
-                this.statement = new Statement(this.tokens, this.tokens.GetNext(), this);
-                this.statement.Build();
-            }
-            else
-            {
-                Parser.PrintError("Unexpected end of program during building block#" + this.id + " statement!", this.token);
-            }
+            this.statement = new Statement(this.tokens, t, this);
+            this.statement.Build();
         }
 
         /// <summary>

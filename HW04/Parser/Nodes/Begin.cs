@@ -36,7 +36,7 @@ namespace HW04.Parser.Nodes
             }
             else
             {
-                Parser.PrintError("Unexpected end of program during building begin block!", this.token);
+                Parser.PrintError("Unexpected end of program during building begin#" + this.id + " block!", this.token);
             }
         }
 
@@ -62,6 +62,10 @@ namespace HW04.Parser.Nodes
                     {
                         this.BuildBegin();
                     }
+                }
+                else
+                {
+                    Parser.PrintError("Unexpected end of program during building begin#" + this.id + " block!", this.token);
                 }
             }
         }
